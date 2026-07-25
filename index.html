@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e7f3ff" />
+  <meta name="color-scheme" content="light" />
+  <meta name="author" content="Samanway Koley" />
+  <meta name="application-name" content="Letterspace" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="description" content="Free Figma letter spacing converter. Convert tracking from percent to CSS pixels or em, preview typography live, and copy accurate CSS instantly." />
+  <meta name="keywords" content="figma letter spacing converter, figma tracking to css, letter spacing percent to px, letter spacing px to percent, figma to css, typography converter, css letter spacing calculator, kerning tracker, tracking converter" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Letterspace" />
+  <meta property="og:title" content="Figma Letter Spacing % to PX Converter" />
+  <meta property="og:description" content="Convert Figma letter spacing percentages to accurate CSS px and em values with a live typography preview." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Figma Letter Spacing % to PX Converter" />
+  <meta name="twitter:description" content="Free Figma-to-CSS letter spacing calculator with live preview and copy-ready output." />
+  <title>Figma Letter Spacing % to PX Converter | Letterspace</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Letterspace - Figma Letter Spacing Converter",
+      "alternateName": "Figma Letter Spacing % to PX Converter",
+      "description": "A free browser-based tool for converting Figma letter spacing percentages to CSS pixel and em values.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript and a modern web browser",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "Samanway Koley",
+        "sameAs": "https://www.linkedin.com/in/samanway-koley"
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does Figma express letter spacing as a percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Figma uses percentages so letter spacing automatically scales proportionally whenever you resize a font. However, CSS requires pixel or em values to render text properly on the web."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use px or em for CSS letter-spacing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use pixels for fixed, component-specific styles like buttons or UI labels. Use relative units like em for fluid typography so the spacing scales alongside responsive layout changes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I convert Figma pixel letter spacing back to a percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Switch to 'px to %' mode in the converter above to easily calculate the percentage equivalent needed for Figma design systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best way to handle Figma line height when writing CSS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In Figma, line height is typically expressed as a percentage or fixed pixel size. In CSS, unitless multipliers or pixel values are used for precise typography. Use the converter above to instantly generate accurate CSS line-height values from your Figma specs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is unitless line height preferred over pixel line height in CSS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unitless values inherit proportionally across child elements, preventing line overlaps or text clipping when font sizes change responsively on mobile devices."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does line height in Figma differ from CSS line-height?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Figma calculates line height relative to the font frame, showing percentage or pixel values. CSS allows unitless numbers, percentages, or exact pixel lengths."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do large headlines in Figma need negative letter spacing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As font sizes increase, optical spacing between letters appears wider. Applying negative letter spacing keeps large display text balanced, compact, and easier to read."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Figma tracking differ from web CSS letter-spacing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Figma tracking applies proportionally to the active font size, whereas standard CSS letter-spacing requires explicit unit values like px, em, or rem."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+  <div class="page-shell">
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <header class="hero" id="top">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="Letterspace home">
+          <img src="images/ls-logo.png" alt="img">
+        </a>
+        <div class="nav-links">
+          <a href="#converter">Converter</a>
+          <a href="#formula">Accuracy</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <button class="nav-action" type="button" data-scroll-to="converter">
+          Open tool
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8h9M9 4l4 4-4 4" />
+          </svg>
+        </button>
+      </nav>
+      <div class="hero-ambient" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <span class="glyph"
+          style="top: 12%; left: 5%; font-size: 132px; --dx: 18px; --dy: -22px; --rot: -6deg; --dur: 17s;">Aa</span>
+        <span class="glyph alt"
+          style="top: 60%; left: 9%; font-size: 72px; --dx: -14px; --dy: 16px; --rot: 4deg; --dur: 13s; --delay: 1s;">-2%</span>
+        <span class="glyph"
+          style="top: 20%; right: 7%; font-size: 104px; --dx: -20px; --dy: 14px; --rot: 5deg; --dur: 19s; --delay: .4s;">px</span>
+        <span class="glyph alt"
+          style="top: 68%; right: 5%; font-size: 156px; --dx: 16px; --dy: -18px; --rot: -3deg; --dur: 21s; --delay: .8s;">%</span>
+        <span class="glyph"
+          style="top: 42%; left: 44%; font-size: 58px; --dx: 10px; --dy: 20px; --rot: 2deg; --dur: 12s; --delay: 1.4s; opacity: .75;">em</span>
+        <span class="glyph"
+          style="top: 84%; left: 36%; font-size: 54px; --dx: 14px; --dy: -12px; --rot: 3deg; --dur: 14s; --delay: 1.1s;">48</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> Figma to CSS, without the guesswork</p>
+        <h1><span>Letterspace.</span> Figma spacing to CSS.</h1>
+        <p class="hero-intro">
+          Convert Figma letter spacing & line height from percent to pixels, preview the result,
+          and copy production-ready CSS in seconds.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-button" type="button" data-scroll-to="converter">Start converting</button>
+        </div>
+      </div>
+      <section class="converter-window" id="converter" aria-labelledby="tool-title">
+        <div class="window-bar">
+          <div class="window-title">
+            <span class="window-logo" aria-hidden="true">
+              <svg viewBox="0 0 20 20">
+                <path d="M5 3h10M10 3v14M7 17h6" />
+              </svg>
+            </span>
+            <div>
+              <h2 id="tool-title">Letter spacing & Line height converter</h2>
+              <p>Figma percent to CSS values</p>
+            </div>
+          </div>
+          <div class="window-actions">
+            <span class="live-status"><i></i> Live preview</span>
+            <button class="subtle-button" id="reset-button" type="button">Reset</button>
+            <button class="dark-button" id="copy-result-button" type="button">Copy result</button>
+          </div>
+        </div>
+        <div class="tool-layout">
+          <aside class="controls" aria-label="Conversion settings">
+            <div class="mode-switch" role="group" aria-label="Conversion direction">
+              <button class="mode-button active" type="button" data-mode="percent">% to px</button>
+              <button class="mode-button" type="button" data-mode="pixel">px to %</button>
+            </div>
+            <div class="control-block">
+              <div class="control-heading">
+                <label for="font-size">Font size</label>
+                <div class="number-field">
+                  <input id="font-size" type="number" min="1" max="300" step="1" value="16" />
+                  <span>px</span>
+                </div>
+              </div>
+              <input class="range-input" id="font-size-range" type="range" min="8" max="120" step="1" value="16"
+                aria-label="Font size in pixels" />
+              <div class="range-labels"><span>8</span><span>120</span></div>
+            </div>
+            <div class="control-block">
+              <div class="control-heading">
+                <label for="spacing-value" id="spacing-label">Figma letter spacing</label>
+                <div class="number-field">
+                  <input id="spacing-value" type="number" min="-20" max="40" step="0.1" value="5" />
+                  <span id="spacing-unit">%</span>
+                </div>
+              </div>
+              <input class="range-input" id="spacing-range" type="range" min="-20" max="40" step="0.1" value="5"
+                aria-label="Letter spacing value" />
+              <div class="range-labels" id="spacing-range-labels">
+                <span>-20%</span><span>40%</span>
+              </div>
+              <p class="field-help" id="spacing-help">
+                Use the exact percentage shown in Figma's type panel.
+              </p>
+            </div>
+            <div class="control-block">
+              <div class="control-heading">
+                <label for="lineheight-value" id="lineheight-label">Figma line height</label>
+                <div class="number-field">
+                  <input id="lineheight-value" type="number" min="0" max="400" step="1" value="150" />
+                  <span id="lineheight-unit">%</span>
+                </div>
+              </div>
+              <input class="range-input" id="lineheight-range" type="range" min="50" max="250" step="1" value="150"
+                aria-label="Line height value" />
+              <div class="range-labels" id="lineheight-range-labels">
+                <span>50%</span><span>250%</span>
+              </div>
+              <p class="field-help" id="lineheight-help">
+                Use the line height percentage from Figma.
+              </p>
+            </div>
+            <div class="control-block compact-block">
+              <label class="small-label" for="preview-text">Preview text</label>
+              <textarea id="preview-text" rows="3">Design with precision.</textarea>
+            </div>
+            <div class="preset-area">
+              <p class="small-label">Quick presets</p>
+              <div class="preset-list">
+                <button type="button" data-font="48" data-percent="-2" data-lineheight="140">Display</button>
+                <button type="button" data-font="32" data-percent="-1" data-lineheight="130">Heading</button>
+                <button type="button" data-font="16" data-percent="5" data-lineheight="150">Body</button>
+                <button type="button" data-font="12" data-percent="8" data-lineheight="120">Label</button>
+              </div>
+            </div>
+          </aside>
+          <div class="preview-panel">
+            <div class="result-row">
+              <div class="primary-results-grid">
+                <div>
+                  <p class="panel-kicker" id="result-label">CSS letter spacing</p>
+                  <div class="result-value" id="result-value" aria-live="polite">0.8 <span>px</span></div>
+                </div>
+                <div>
+                  <p class="panel-kicker" id="lh-result-label">CSS line height</p>
+                  <div class="result-value" id="lh-result-value" aria-live="polite">24 <span>px</span></div>
+                </div>
+              </div>
+              <div class="calculation" id="calculation">16 x (5 / 100) = 0.8px | LH: 16 x (150 / 100) = 24px</div>
+            </div>
+            <div class="type-preview">
+              <div class="preview-toolbar">
+                <span>Live type sample</span>
+                <span id="preview-meta">16px / 5% / 150%</span>
+              </div>
+              <div class="preview-canvas">
+                <p id="preview-output">Design with precision.</p>
+                <div class="baseline" aria-hidden="true"></div>
+              </div>
+            </div>
+            <div class="output-grid">
+              <div class="output-item">
+                <span>Figma (LS / LH)</span>
+                <strong id="figma-output">5% / 150%</strong>
+              </div>
+              <div class="output-item">
+                <span>CSS pixels</span>
+                <strong id="pixel-output">0.8px / 24px</strong>
+              </div>
+              <div class="output-item">
+                <span>Relative unit</span>
+                <strong id="em-output">0.05em / 1.5</strong>
+              </div>
+            </div>
+            <div class="code-output">
+              <div class="code-heading">
+                <span>CSS</span>
+                <button type="button" id="copy-css-button" aria-label="Copy CSS declaration">
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <rect x="5" y="5" width="8" height="8" rx="1.5" />
+                    <path d="M3 10V4.5A1.5 1.5 0 0 1 4.5 3H10" />
+                  </svg>
+                  Copy CSS
+                </button>
+              </div>
+              <code id="css-code">letter-spacing: 0.8px;<br>line-height: 24px;</code>
+            </div>
+            <div class="specimen-ticker" aria-hidden="true">
+              <div class="specimen-track" id="specimen-track">
+                <span class="word">Typography</span>
+                <span class="word muted">Letterspace</span>
+                <span class="word">Kerning</span>
+                <span class="word muted">Tracking</span>
+                <span class="word">Baseline</span>
+                <span class="word muted">Rhythm</span>
+                <span class="word">Hierarchy</span>
+                <span class="word muted">Precision</span>
+                <span class="word">Typography</span>
+                <span class="word muted">Letterspace</span>
+                <span class="word">Kerning</span>
+                <span class="word muted">Tracking</span>
+                <span class="word">Baseline</span>
+                <span class="word muted">Rhythm</span>
+                <span class="word">Hierarchy</span>
+                <span class="word muted">Precision</span>
+              </div>
+            </div>
+            <div class="recent-row">
+              <span class="label">Recent</span>
+              <div class="recent-chips" id="recent-chips">
+                <span class="recent-empty">Your recent conversions will appear here.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+    <main>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Tracking</span><i>&middot;</i>
+          <span>Kerning</span><i>&middot;</i>
+          <span>Leading</span><i>&middot;</i>
+          <span>X-Height</span><i>&middot;</i>
+          <span>Baseline</span><i>&middot;</i>
+          <span>Cap Height</span><i>&middot;</i>
+          <span>Descender</span><i>&middot;</i>
+          <span>Letter Spacing</span><i>&middot;</i>
+          <span>Tracking</span><i>&middot;</i>
+          <span>Kerning</span><i>&middot;</i>
+          <span>Leading</span><i>&middot;</i>
+          <span>X-Height</span><i>&middot;</i>
+          <span>Baseline</span><i>&middot;</i>
+          <span>Cap Height</span><i>&middot;</i>
+          <span>Descender</span><i>&middot;</i>
+          <span>Letter Spacing</span><i>&middot;</i>
+        </div>
+        <div class="marquee-track">
+          <span>Tracking</span><i>&middot;</i>
+          <span>Kerning</span><i>&middot;</i>
+          <span>Leading</span><i>&middot;</i>
+          <span>X-Height</span><i>&middot;</i>
+          <span>Baseline</span><i>&middot;</i>
+          <span>Cap Height</span><i>&middot;</i>
+          <span>Descender</span><i>&middot;</i>
+          <span>Letter Spacing</span><i>&middot;</i>
+          <span>Tracking</span><i>&middot;</i>
+          <span>Kerning</span><i>&middot;</i>
+          <span>Leading</span><i>&middot;</i>
+          <span>X-Height</span><i>&middot;</i>
+          <span>Baseline</span><i>&middot;</i>
+          <span>Cap Height</span><i>&middot;</i>
+          <span>Descender</span><i>&middot;</i>
+          <span>Letter Spacing</span><i>&middot;</i>
+        </div>
+      </div>
+      <section class="formula-section reveal" id="formula">
+        <div class="section-copy">
+          <p class="section-label">Precision Engine</p>
+          <h2>Built for pixel-perfect accuracy.</h2>
+          <p>
+            Figma and web browsers handle typography differently. We instantly harmonize
+            these units so your live code matches the design specs down to the pixel.
+          </p>
+        </div>
+        <div class="formula-display">
+          <p>Figma Unit <span>(Relative %)</span></p>
+          <i>+</i>
+          <p>Browser Engine <span>(CSS Spec)</span></p>
+          <i>=</i>
+          <p>Exact Match <span>(Pixel Unit)</span></p>
+        </div>
+      </section>
+      <section class="workflow-section reveal" id="workflow">
+        <div class="workflow-heading">
+          <p class="section-label">A cleaner handoff</p>
+          <h2>Move from design to code without losing type detail.</h2>
+        </div>
+        <div class="workflow-steps">
+          <article>
+            <span>01</span>
+            <h3>Read the type settings</h3>
+            <p>Copy font size, letter spacing, and line height percentages from Figma.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Convert and preview</h3>
+            <p>Enter the values and confirm typography rendering on a live text sample.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Paste clean CSS</h3>
+            <p>Copy the exact pixel declaration directly into your stylesheet.</p>
+          </article>
+        </div>
+      </section>
+      <section class="example-section reveal" aria-labelledby="example-title">
+        <div>
+          <p class="section-label">Example</p>
+          <h2 id="example-title">48px type at -2% LS & 140% LH becomes -0.96px & 67.2px.</h2>
+        </div>
+        <button class="primary-button" type="button" data-preset-example>
+          Try this example
+        </button>
+      </section>
+      <section class="faq-section reveal" id="faq" aria-labelledby="faq-title">
+        <div class="faq-heading">
+          <div>
+              <p class="section-label">Letter spacing FAQ</p>
+              <h2 id="faq-title">Figma tracking to CSS questions, answered.</h2>
+            </div>
+            <p>
+              Clear answers for converting Figma typography values into accurate,
+              production-ready CSS letter spacing.
+            </p>
+          </div>
+          <div class="faq-list">
+          <details open>
+            <summary>Why does Figma express letter spacing as a percentage?</summary>
+            <p>
+              Figma uses percentage values for tracking so letter spacing scales dynamically with font size changes. Because web browsers require explicit CSS units like <code>px</code>, <code>em</code>, or <code>rem</code>, converting percentages is essential for pixel-perfect design handoffs.
+            </p>
+          </details>
+          <details>
+            <summary>Should I use px or em for CSS letter-spacing?</summary>
+            <p>
+              Use pixels (<code>px</code>) for fixed UI elements like buttons and badges. Use relative units like <code>em</code> for responsive body copy and fluid typography, allowing letter spacing to scale proportionally alongside layout changes.
+            </p>
+          </details>
+          <details>
+            <summary>How do I convert Figma pixel letter spacing back to percentage?</summary>
+            <p>
+              Toggle to <strong>px to %</strong> mode in the converter above. This calculates the exact percentage equivalent needed for Figma design systems when updating code back into Figma.
+            </p>
+          </details>
+          <details>
+            <summary>What is the best way to handle Figma line height when writing CSS?</summary>
+            <p>
+              In Figma, line height is usually shown as a percentage or fixed pixel size. When writing CSS, unitless values (e.g., <code>1.5</code>) or exact pixels (<code>24px</code>) are ideal to ensure proper scaling and vertical rhythm. You can use the converter above to automatically derive both unitless ratios and CSS pixel values directly from your Figma design properties.
+            </p>
+          </details>
+          <details>
+            <summary>Why is unitless line height preferred over pixel line height in CSS?</summary>
+            <p>
+              Unitless values (like <code>line-height: 1.5</code>) inherit proportionally to child elements without causing unexpected visual overlap or clipped text when font sizes change across mobile breakpoints.
+            </p>
+          </details>
+          <details>
+            <summary>How does line height in Figma differ from CSS line-height?</summary>
+            <p>
+              Figma calculates line height relative to the font's bounding box and displays it as percentage or pixels. CSS supports unitless multipliers, percentages, and absolute lengths, making precise conversion necessary during front-end development.
+            </p>
+          </details>
+          <details>
+            <summary>Why do large headlines in Figma need negative letter spacing?</summary>
+            <p>
+              Larger font sizes increase the optical gap between characters. Applying negative tracking in Figma (and negative <code>letter-spacing</code> in CSS) tightens display text for improved readability and tighter visual rhythm.
+            </p>
+          </details>
+          <details>
+            <summary>How does Figma tracking differ from CSS letter-spacing?</summary>
+            <p>
+              Figma tracking applies proportionally to the active font size using percentages. CSS <code>letter-spacing</code> requires unit values like <code>px</code> or <code>em</code>, requiring direct conversion to preserve the visual design intent.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section class="editorial-band reveal" aria-labelledby="editorial-title">
+        <div class="editorial-inner">
+          <p class="editorial-giant" aria-hidden="true">
+            Aa<span class="accent">.</span>
+            <span class="sub">&minus;2%&nbsp;=&nbsp;&minus;0.96px</span>
+          </p>
+          <div class="editorial-copy">
+            <p class="section-label">Why it matters</p>
+            <h3 id="editorial-title">Type is engineering, not decoration.</h3>
+            <p>
+              A single mis-translated tracking value is enough to break the rhythm of a
+              headline or loosen a label past recognition. Letterspace removes the
+              arithmetic from the handoff so the type you designed is the type that ships.
+            </p>
+            <div class="editorial-stats">
+              <div><span>1</span><em>formula</em></div>
+              <div><span>3</span><em>output units</em></div>
+              <div><span>0</span><em>guesswork</em></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p class="copyright">Copyright &copy; 2026 Letterspace</p>
+      <p class="developer-credit">
+        Developed by <a href="https://github.com/Samanway-Koley" target="_blank" rel="me noopener noreferrer">Samanway Koley</a>
+      </p>
+      <div class="social-links" aria-label="Contact and social links">
+        <a href="mailto:samanwaykoley@gmail.com" aria-label="Email Samanway Koley" title="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m4 7 8 6 8-6" />
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/samanway-koley" target="_blank" rel="me noopener noreferrer"
+          aria-label="Samanway Koley on LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 9v8M7 6.5v.01M11 17v-4.5a3.5 3.5 0 0 1 7 0V17M11 9v8" />
+          </svg>
+        </a>
+      </div>
+    </footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+  <noscript>
+    Letterspace needs JavaScript enabled to calculate live Figma letter spacing values.
+  </noscript>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
